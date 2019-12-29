@@ -1,17 +1,17 @@
 # TODO:
 # - Rename to kf5-kio-extras ?
 # - Package /usr/share/doc/HTML/
-# -
+# - -devel package to be added
 
 Summary:	Additional components to increase the functionality of KIO
 Summary(pl.UTF-8):	Dodatkowe komponenty zwiększające funcjonalność KIO
 Name:		kio-extras
-Version:	17.08.2
+Version:	19.04.1
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://github.com/KDE/kio-extras/archive/v%{version}.tar.gz
-# Source0-md5:	3fa0cbdc9f13bc76a064de3118d31908
+# Source0-md5:	da6d5e506351b20a5926100ee8cf2b66
 URL:		https://github.com/KDE/kio-extras
 BuildRequires:	automoc4
 BuildRequires:	cmake
@@ -102,7 +102,7 @@ install -d $RPM_BUILD_ROOT%{_desktopdir}
         DESTDIR=$RPM_BUILD_ROOT \
         kde_htmldir=%{_kdedocdir}
 
-# %%find_lang %{name} --with-kde
+#%find_lang %{name} --with-kde
 # locolor icons are deprecated (see kde .spec-s)
 rm -f $RPM_BUILD_ROOT%{_iconsdir}/locolor/*/apps/*.png
 # %%{__mv} $RPM_BUILD_ROOT%{_docdir}/HTML/pt_BR $RPM_BUILD_ROOT%{_docdir}/HTML/pt
@@ -110,18 +110,22 @@ rm -f $RPM_BUILD_ROOT%{_iconsdir}/locolor/*/apps/*.png
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-#%%files -f %{name}.lang
+#%files -f %{name}.lang
 %files
 %defattr(644,root,root,755)
 # %doc AUTHORS ChangeLog FAQ README
+/etc/xdg/kio-extras.categories
 %attr(755,root,root) %{_libdir}/libmolletnetwork5.so.*
 %attr(755,root,root) %{_libdir}/qt5/plugins/*.so
 %attr(755,root,root) %{_libdir}/qt5/plugins/kf5/kded/*.so
 %attr(755,root,root) %{_libdir}/qt5/plugins/kf5/kio/*.so
+%attr(755,root,root) %{_libdir}/qt5/plugins/kf5/kiod/*.so
+%attr(755,root,root) %{_libdir}/qt5/plugins/kf5/parts/*.so
 %attr(755,root,root) %{_libdir}/libkioarchive.so.*
-
+%{_docdir}/HTML/en/kioslave5 
 %{_datadir}/config.kcfg/jpegcreatorsettings5.kcfg
 %{_datadir}/dbus-1/interfaces/kf5_org.kde.network.kioslavenotifier.xml
+%{_datadir}/dbus-1/services/org.kde.kmtp.daemon.service
 # TODO: Review:  /konqueror/dirtree/remote ?
 %dir %{_datadir}/konqueror
 %dir %{_datadir}/konqueror/dirtree
@@ -143,6 +147,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/kio_info
 %{_datadir}/kio_info/kde-info2html
 %{_datadir}/kio_info/kde-info2html.conf
-# TODO: no %{_datadir}/konqsidebartng/virtual_folders/remote/
-# %{_datadir}/konqsidebartng/virtual_folders/remote/virtualfolder_network.desktop
+%dir %{_datadir}/konqsidebartng/virtual_folders/remote/
+%{_datadir}/konqsidebartng/virtual_folders/remote/virtualfolder_network.desktop
 # TODO: no %{_datadir}/konqueror/dirtree/remote/ ?
